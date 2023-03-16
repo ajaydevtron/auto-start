@@ -32,6 +32,8 @@ def shutdown():
         #stopping vm by checking status
         if vmstatus=="VM stopped":
             sp.getoutput("az vm start -n {} -g {}".format(l[x],r))
+        elif vmstatus=="VM deallocated":
+            sp.getoutput("az vm start -n {} -g {}".format(l[x],r))
         else:
             print("Already Running")
 
