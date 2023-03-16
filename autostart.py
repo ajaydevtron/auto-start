@@ -22,18 +22,24 @@ def shutdown():
     l=list(str.split())
     #print(l)
     for x in range(len(l)):
-        print(l[x])
+        print(f" Details of VM  name:{l[x]} ")
         #To get resource group pf vm
         k="[?name==\`{}\`].resourceGroup".format(l[x])
         
         r=sp.getoutput("az vm list --query {}  -o tsv".format(k))
-        print(r)
+        
         vmstatus=checkvmstatus(l[x],r)
+        print(f"status is :{vmstatus}")
         #stopping vm by checking status
+        print("VM starting......")
         if vmstatus=="VM stopped":
             sp.getoutput("az vm start -n {} -g {}".format(l[x],r))
+            time.sleep(3)
+            print("VM started")
         elif vmstatus=="VM deallocated":
             sp.getoutput("az vm start -n {} -g {}".format(l[x],r))
+            time.sleep(3)
+            print("VM started")
         else:
             print("Already Running")
 
